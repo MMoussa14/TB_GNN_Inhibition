@@ -418,7 +418,7 @@ def train_model(dataset, epochs=100, batch_size=32, lr=0.001,
 
 if __name__ == "__main__":
     # Example usage - UPDATE THIS PATH
-    csv_file = "C:\Users\georgemoussa\Downloads\Python313\AID_588726_datatable (FBA).csv" # FIle is now in the same directory
+    csv_file = "C:\Users\MMoussa\Model\AID_588726_datatable (FBA).csv" # FIle is now in the same directory
 
     print("Loading and preprocessing dataset...")
     dataset = MolecularDataset(csv_file)
@@ -435,5 +435,5 @@ if __name__ == "__main__":
     )
 
     # Save model
-    torch.save(model.state_dict(), 'molecular_gnn_model.pt')
-    print("\nModel saved to 'molecular_gnn_model.pt'")
+    torch.save(model.state_dict(), 'model_exp2_weighted_2x.pt')
+    print("\nModel saved to 'model_exp2_weighted_2x.pt'")
