@@ -1,2 +1,2 @@
-# TB_gnn_Inhibition
+# TB_GNN_Inhibition
 Uses original Graph Neural Network (GNN) model with the addition of inhibitors and weighted loss.
