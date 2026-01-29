@@ -39,7 +39,6 @@ def check_files():
     
     required_files = [
         ('InhModel.py', 'Model definition and training'),
-        ('test_model.py', 'Testing script'),
         ('quick_test.py', 'Interactive testing'),
         ('requirements.txt', 'Dependencies'),
         ('AID_588726_datatable (FBA).csv', 'Dataset'),
