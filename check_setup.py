@@ -38,7 +38,7 @@ def check_files():
     print("\nChecking files...")
     
     required_files = [
-        ('model.py', 'Model definition and training'),
+        ('InhModel.py', 'Model definition and training'),
         ('test_model.py', 'Testing script'),
         ('quick_test.py', 'Interactive testing'),
         ('requirements.txt', 'Dependencies'),
@@ -46,7 +46,7 @@ def check_files():
     ]
     
     optional_files = [
-        ('molecular_gnn_model.pt', 'Trained model'),
+        ('model_exp2_weighted_2x.pt', 'Trained model'),
         ('model_info.json', 'Model metadata'),
     ]
     
@@ -121,7 +121,7 @@ def main():
     print("✓ All required files present")
     
     # Check if model is trained
-    if not Path("molecular_gnn_model.pt").exists():
+    if not Path("model_exp2_weighted_2x.pt").exists():
         print("\n⚠ Model not trained yet")
         print("\nNext steps:")
         print("  1. Train the model:")
