@@ -8,7 +8,7 @@ import sys
 import torch
 from pathlib import Path
 from test_model import load_model, predict_smiles, test_on_dataset
-from model import MolecularDataset
+from InhModel import MolecularDataset
 from sklearn.model_selection import train_test_split
 
 
