@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Import from model.py
-from model import MolecularGNN, MolecularDataset, smiles_to_graph
+from InhModel import MolecularGNN, MolecularDataset, smiles_to_graph
 from torch_geometric.loader import DataLoader
 from torch_geometric.data import Data
 from sklearn.model_selection import train_test_split
