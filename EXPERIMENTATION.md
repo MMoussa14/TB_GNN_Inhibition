@@ -102,7 +102,7 @@ This approach is would be better than using weighted loss, which can distort pro
 
 ---
 
-### Option 2 — Multi‑AID Training (Recommended for Biology)
+### Option 2 — Multi‑AID Training
 
 A robust approach can be to train one shared model across multiple datatables.
 
