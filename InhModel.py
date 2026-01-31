@@ -140,6 +140,10 @@ class MolecularDataset(Dataset):
 
         # Read CSV
         df = pd.read_csv(csv_file, skiprows=[1, 2, 3, 4])  # Skip metadata rows
+        if '%Inhibition_A' in df.columns:
+            df = pd.read_csv(csv_file, skiprows=[1, 2, 3])  # Skip metadata rows
+        elif 'REPLICATE_A_ACTIVITY_SCORE_12.48uM_(%)' in df.columns:
+            df = pd.read_csv(csv_file, skiprows=[1, 2, 3])  # Skip metadata rows
 
         # Clean data
         df = df.dropna(subset=['PUBCHEM_EXT_DATASOURCE_SMILES', 'PUBCHEM_ACTIVITY_OUTCOME'])
@@ -159,6 +163,51 @@ class MolecularDataset(Dataset):
             # Original range: -65.54 to 2011.49
             min_score = -65.54
             max_score = 2011.49
+            normalized_scores = (raw_scores - min_score) / (max_score - min_score)
+            
+            # Clip to ensure values are in [0, 1]
+            import numpy as np
+            normalized_scores = np.clip(normalized_scores, 0, 1)
+            
+            self.scores = torch.tensor(normalized_scores, dtype=torch.float)
+            print(f"✓ Normalized inhibition scores - Min: {self.scores.min():.4f}, Max: {self.scores.max():.4f}")
+        elif 'Average Inhibition at 1 uM' in df.columns:
+            raw_scores = df['Average Inhibition at 1 uM'].fillna(0).values
+            
+            # Normalise scores to 0-1 range
+            # Original range: -65.54 to 2011.49
+            min_score = -65.54
+            max_score = 2011.49
+            normalized_scores = (raw_scores - min_score) / (max_score - min_score)
+            
+            # Clip to ensure values are in [0, 1]
+            import numpy as np
+            normalized_scores = np.clip(normalized_scores, 0, 1)
+            
+            self.scores = torch.tensor(normalized_scores, dtype=torch.float)
+            print(f"✓ Normalized inhibition scores - Min: {self.scores.min():.4f}, Max: {self.scores.max():.4f}")
+        elif '%Inhibition_A' in df.columns and '%Inhibition_B' in df.columns:
+            raw_scores = df[['%Inhibition_A', '%Inhibition_B']].fillna(0).mean(axis=1).values
+            
+            # Normalise scores to 0-1 range
+            # Original range: -100 to 100
+            min_score = -100
+            max_score = 100
+            normalized_scores = (raw_scores - min_score) / (max_score - min_score)
+            
+            # Clip to ensure values are in [0, 1]
+            import numpy as np
+            normalized_scores = np.clip(normalized_scores, 0, 1)
+            
+            self.scores = torch.tensor(normalized_scores, dtype=torch.float)
+            print(f"✓ Normalized inhibition scores - Min: {self.scores.min():.4f}, Max: {self.scores.max():.4f}")
+        elif 'REPLICATE_A_ACTIVITY_SCORE_12.48uM_(%)' in df.columns and 'REPLICATE_B_ACTIVITY_SCORE_12.48uM_(%)' in df.columns:
+            raw_scores = df[['REPLICATE_A_ACTIVITY_SCORE_12.48uM_(%)', 'REPLICATE_B_ACTIVITY_SCORE_12.48uM_(%)']].fillna(0).mean(axis=1).values
+            
+            # Normalise scores to 0-1 range
+            # Original range: -100 to 100
+            min_score = -100
+            max_score = 100
             normalized_scores = (raw_scores - min_score) / (max_score - min_score)
             
             # Clip to ensure values are in [0, 1]
@@ -418,7 +467,7 @@ def train_model(dataset, epochs=100, batch_size=32, lr=0.001,
 
 if __name__ == "__main__":
     # Example usage - UPDATE THIS PATH
-    csv_file = "C:\Users\MMoussa\Model\AID_588726_datatable (FBA).csv" # FIle is now in the same directory
+    csv_file = "/Users/markm/tables/AID_588549_datatable (FadD28).csv" # FIle is now in the same directory
 
     print("Loading and preprocessing dataset...")
     dataset = MolecularDataset(csv_file)
