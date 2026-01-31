@@ -78,6 +78,61 @@ This provides an easy menu-driven interface to:
 2. Predict activity for your own molecules (SMILES)
 3. Run predictions on example drugs
 
+### 3. Test the Model (Command Line)
+
+For more control, use the command-line interface:
+
+**Test on the original dataset:**
+```bash
+python test_model.py \
+    --model-path molecular_gnn_model.pt \
+    --data-path "AID_588726_datatable (FBA).csv" \
+    --use-test-split \
+    --save-predictions
+```
+
+**Predict on new molecules:**
+```bash
+python test_model.py \
+    --model-path molecular_gnn_model.pt \
+    --smiles "CCO" "c1ccccc1" "CC(=O)O"
+```
+
+**Batch predict from file:**
+```bash
+python test_model.py \
+    --model-path molecular_gnn_model.pt \
+    --smiles-file molecules.txt \
+    --save-predictions
+```
+
+## 📊 Understanding Results
+
+### Output Metrics
+
+- **AUC-ROC**: Area under ROC curve (0.5 = random, 1.0 = perfect)
+- **Accuracy**: Overall correct predictions
+- **Precision**: Of predicted active, how many are truly active
+- **Recall**: Of truly active, how many were detected
+- **F1 Score**: Harmonic mean of precision and recall
+
+### Output Files
+
+When using `--save-predictions`, the following files are generated in `test_results/`:
+
+- `test_metrics.json` - Detailed performance metrics
+- `predictions.csv` - Individual molecule predictions
+- `roc_curve.png` - ROC curve visualization
+- `confusion_matrix.png` - Confusion matrix heatmap
+
+### Interpreting Predictions
+
+- **Active** = Toxic to tuberculosis bacteria (potential drug candidate ✓)
+- **Inactive** = Not toxic to tuberculosis bacteria
+- **Probability** = Confidence score (0-1) for active prediction
+- **Confidence** = How certain the model is (distance from 0.5 threshold)
+
+
 ## 🏗️ Model Architecture
 
 The GNN model consists of:
