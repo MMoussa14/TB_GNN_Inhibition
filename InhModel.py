@@ -467,7 +467,7 @@ def train_model(dataset, epochs=100, batch_size=32, lr=0.001,
 
 if __name__ == "__main__":
     # Example usage - UPDATE THIS PATH
-    csv_file = "/Users/markm/tables/AID_588549_datatable (FadD28).csv" # FIle is now in the same directory
+    csv_file = "/Users/markm/tables/AID_588726_datatable (FBA).csv" # FIle is now in the same directory
 
     print("Loading and preprocessing dataset...")
     dataset = MolecularDataset(csv_file)
